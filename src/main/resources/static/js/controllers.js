@@ -37,6 +37,7 @@ controllers.controller('ListUsersController', ['$scope', 'Service', function($sc
 	$scope.del = function(url) {
 	    Service.del(url).then(function() {
 	        findAll();
+	        changeSave('add');
 	        $scope.user = {};
         });
 	}

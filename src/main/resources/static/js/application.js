@@ -11,8 +11,7 @@ var userApp = angular.module('userApp', [
 userApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'temp/home.html',
-			controller: 'MainController'
+			templateUrl: 'temp/home.html'
 		})
 		.when('/user', {
 			templateUrl: 'temp/users.html',
