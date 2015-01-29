@@ -5,16 +5,18 @@
 var userApp = angular.module('userApp', [
 	'ngRoute',
 	'controllers',
-	'services'
+	'services',
+	'filters'
 ]);
 
 userApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/', {
-			templateUrl: 'temp/home.html'
+			templateUrl: 'temp/test.html',
+			controller: 'MainController'
 		})
-		.when('/user', {
-			templateUrl: 'temp/users.html',
-			controller: 'ListUsersController'
+		.when('/list', {
+			templateUrl: 'temp/list.html',
+			controller: 'ListController'
 		})
 }]);

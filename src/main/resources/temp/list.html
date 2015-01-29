@@ -8,7 +8,6 @@
 			</div>
 			<div class="panel-body">
 				<form role="form">
-					
 					<div class="form-group"  ng-repeat="(key, value) in entity">
 						<input type="text" id="name" class="form-control" ng-model="entity[key]" placeholder="{{ key }}">
 					</div>
@@ -24,21 +23,18 @@
 	</div>
 	<div class="col-lg-8">
 		<div class="panel panel-default">
-			<div class="panel-heading">All Entities</div>
+			<div class="panel-heading">All {{name | CapFirst}}</div>
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th ng-repeat="(key, value) in entities._embedded.users[0]">{{ key }}</th>
+						<th ng-repeat="(key, value) in entities._embedded[name][0]">{{ key | CapFirst }}</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="user in users._embedded.users">
-						<td>{{user.name}}</td>
-						<td>{{user.username}}</td>
-						<td>{{user.password}}</td>
-						<td>{{user.active}}</td>
-						<td><a href="" ng-click="edit(user._links.self.href)">View</a></td>
+					<tr ng-repeat="entity in entities._embedded[name]">
+						<td ng-repeat="(key, value) in entity">{{ value }}</td>
+						<td><a href="" ng-click="edit(entity._links.self.href)">View</a></td>
 					</tr>
 				</tbody>
 			</table>

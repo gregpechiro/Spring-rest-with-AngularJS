@@ -11,6 +11,7 @@
 		<script src="/static/js/application.js"></script>
 		<script src="/static/js/controllers.js"></script>
 		<script src="/static/js/services.js"></script>
+		<script src="/static/js/filters.js"></script>
 	</head>
 	<body>
 	
