@@ -1,0 +1,38 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'groovy'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'spring-data-rest-starter'
+    version =  '1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-data-rest"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compile "org.springframework.boot:spring-boot-starter-freemarker"
+    compile "org.codehaus.groovy:groovy-all"
+    compile "mysql:mysql-connector-java"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}

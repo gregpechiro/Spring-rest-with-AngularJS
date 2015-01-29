@@ -1,0 +1,47 @@
+<br><br>
+<div class="row">
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				User
+				<button class="btn btn-default pull-right btn-xs" ng-click="clear()">Clear</button>
+			</div>
+			<div class="panel-body">
+				<form role="form">
+					
+					<div class="form-group"  ng-repeat="(key, value) in entity">
+						<input type="text" id="name" class="form-control" ng-model="entity[key]" placeholder="{{ key }}">
+					</div>
+					<div class="form-group">
+						<button class="btn btn-block btn-success" ng-click="save(entity._links.self.href)">Save</button>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-block btn-danger" ng-show="entity._links.self.href" ng-click="del(entity._links.self.href)">Delete</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">All Entities</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th ng-repeat="(key, value) in entities._embedded.users[0]">{{ key }}</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in users._embedded.users">
+						<td>{{user.name}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.password}}</td>
+						<td>{{user.active}}</td>
+						<td><a href="" ng-click="edit(user._links.self.href)">View</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

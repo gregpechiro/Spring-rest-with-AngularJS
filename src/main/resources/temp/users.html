@@ -1,0 +1,58 @@
+<br><br>
+<div class="row">
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				User
+				<button class="btn btn-default pull-right btn-xs" ng-click="clear()">Clear</button>
+			</div>
+			<div class="panel-body">
+				<form role="form">
+					<div class="form-group">
+						<input type="text" id="name" class="form-control" ng-model="user.name" placeholder="First Name">
+					</div>
+					<div class="form-group">
+						<input type="email" id="username" class="form-control" ng-model="user.username" placeholder="Email">
+					</div>
+					<div class="form-group">
+						<input type="text" id="password" class="form-control" ng-model="user.password" placeholder="Password">
+					</div>
+					<div class="form-group">
+						<input type="text" id="active" class="form-control" ng-model="user.active" placeholder="Active">
+					</div>
+					<div class="form-group">
+						<button class="btn btn-block btn-success" ng-click="save(user._links.self.href)">Save</button>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-block btn-danger" ng-show="user._links.self.href" ng-click="del(user._links.self.href)">Delete</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">All Users</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Active</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="user in users._embedded.users">
+						<td>{{user.name}}</td>
+						<td>{{user.username}}</td>
+						<td>{{user.password}}</td>
+						<td>{{user.active}}</td>
+						<td><a href="" ng-click="edit(user._links.self.href)">View</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

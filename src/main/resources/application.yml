@@ -1,0 +1,25 @@
+spring:
+
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rest?createDatabaseIfNotExist=true
+    username: root
+    password: root
+    maxActive: 10
+    maxIdle: 5
+    minIdle: 1
+    initialSize: 1
+    minEvictableIdleTimeMillis: 180000
+    timeBetweenEvictionRunsMillis: 180000
+    maxWait: 10000
+    validationQuery: SELECT 1
+    testOnBorrow: true
+    testOnReturn: true
+    testWhileIdle: true
+  jpa:
+    generateDdl: true
+
+server:
+  port: 8080
+  address: 0.0.0.0
+  session-timeout: 1800
