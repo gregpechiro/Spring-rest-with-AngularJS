@@ -13,7 +13,10 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CsrfFilter
+import org.springframework.security.web.csrf.CsrfTokenRepository
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+
 import javax.sql.DataSource
 
 /**
@@ -68,11 +71,18 @@ class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 			.maxSessionsPreventsLogin(false)
 			.and()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-		http.csrf().disable()
+		http.csrf().csrfTokenRepository(csrfTokenRepository())
 	}
 
 	@Bean
 	CustomCsrfFilter customCsrfFilter() {
 		new CustomCsrfFilter()
 	}
+
+	CsrfTokenRepository csrfTokenRepository() {
+		def repository = new HttpSessionCsrfTokenRepository()
+		repository.setHeaderName("X-XSRF-TOKEN")
+		repository
+	}
+	
 }

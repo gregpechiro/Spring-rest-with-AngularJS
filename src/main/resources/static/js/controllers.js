@@ -38,20 +38,24 @@ controllers.controller('MainController', ['$scope', 'entityService', function($s
 		entityService("del", url).then(function() {
 			findAll(baseUrl); $scope.entity = {};
 			changeSave('add');
+			$scope.showForm = false;
         });
 	};
 
 	$scope.edit = function(url) {
 		entityService("findOne", url).then(function(data) {
 	        $scope.entity = data; changeSave('update');
+	        $scope.showForm = true;
 	    });
 	};
 
 	$scope.clear = function() {
 		$scope.entity = {}; changeSave('add');
+		$scope.showForm = false;
 	};
 
     $scope.setEntity = function(url, name) {
+        $scope.showForm = false;
         findAll(url);
         $scope.name = name;
         changeSave('add');
