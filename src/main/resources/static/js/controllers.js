@@ -6,8 +6,8 @@ var controllers = angular.module('controllers', []);
 
 controllers.controller('ListController', ['$scope', 'Service', function($scope, Service) {
 
-    var url = '/api/users/'
-    $scope.name = 'users'
+    var url = '/api/users/';
+    $scope.name = 'users';
 
     // find all users
 	function findAll() {
@@ -28,7 +28,7 @@ controllers.controller('ListController', ['$scope', 'Service', function($scope, 
                 $scope.entity = data
             });
         })}
-	}
+	};
 
 	// change save function
 	function changeSave(action) {
@@ -42,7 +42,7 @@ controllers.controller('ListController', ['$scope', 'Service', function($scope, 
 	        findAll();
 	        $scope.entity = {};
         });
-	}
+	};
 
 	// display user to edit
 	$scope.edit = function(url) {
