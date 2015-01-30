@@ -6,6 +6,6 @@ filters.filter('title', function() {
 	return function(s) { return s && s[0].toUpperCase() + s.slice(1); }
 });
 
-filters.filter('sanitize', function() {
+filters.filter('links', function() {
 	return function(s) { return s && s.split("{")[0]; }
 });

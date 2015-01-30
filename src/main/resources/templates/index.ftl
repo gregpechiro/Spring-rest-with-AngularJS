@@ -10,7 +10,7 @@
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular-route.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular-resource.js"></script>
-		<script src="/static/js/application.js"></script>
+		<script src="/static/js/app.js"></script>
 		<script src="/static/js/controllers.js"></script>
 		<script src="/static/js/services.js"></script>
 		<script src="/static/js/filters.js"></script>

@@ -19,7 +19,7 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<li ng-repeat="(k, v) in buttons._links">
-					<a href="{{ v.href | sanitize }}">{{ k | title }}</a>
+					<a href="{{ v.href | links }}">{{ k | title }}</a>
 				</li>
 			</ul>
 		</div>
