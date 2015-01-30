@@ -4,41 +4,45 @@ var controllers = angular.module('controllers', []);
 
 controllers.controller('MainController', ['$scope', 'entityService', function($scope, entityService) {
 
-    var uri = '/api/users/';
-    $scope.name = 'users';
+    var baseUrl = ''
 
-	function changeSave(e) {
-		$scope.save = save[e];
-		$scope.saveName = e;
+	function changeSave(action) {
+		$scope.save = save[action];
+		$scope.saveName = action;
 	}
 
-	function findAll() {
-		entityService("findAll", "/api").then(function(data){
-			$scope.buttons = data;
-		});
-		entityService("findAll", uri).then(function(data) {
+	function findAll(url) {
+		entityService("findAll", url).then(function(data) {
 			$scope.entities = data;
 		});
 	}
 
 	var save = {
-	    add : function() {entityService("add", uri, $scope.entity).then(function() {
-			findAll(); $scope.entity = {};
-        })},
-        update : function(uri) {entityService("update", uri, $scope.entity).then(function() {
-			findAll();
-			entityService("findOne", uri).then(function(data) { $scope.entity = data; });
-        })}
+	    add : function() {
+	        entityService("add", url, $scope.entity).then(function() {
+			    findAll(baseUrl); $scope.entity = {};
+			    changeSave('add');
+            }
+        )},
+        update : function(url) {
+            entityService("update", url, $scope.entity).then(function() {
+			    findAll(baseUrl);
+			    entityService("findOne", url).then(function(data) {
+			        $scope.entity = data;
+			    });
+            }
+        )}
 	};
 
-	$scope.del = function(uri) {
-		entityService("del", uri).then(function() {
-			findAll(); $scope.entity = {};
+	$scope.del = function(url) {
+		entityService("del", url).then(function() {
+			findAll(baseUrl); $scope.entity = {};
+			changeSave('add');
         });
 	};
 
-	$scope.edit = function(uri) {
-		entityService("findOne", uri).then(function(data) {
+	$scope.edit = function(url) {
+		entityService("findOne", url).then(function(data) {
 	        $scope.entity = data; changeSave('update');
 	    });
 	};
@@ -47,8 +51,21 @@ controllers.controller('MainController', ['$scope', 'entityService', function($s
 		$scope.entity = {}; changeSave('add');
 	};
 
-	changeSave('add');
-	findAll();
-    $scope.entity = {};
+    $scope.setEntity = function(url, name) {
+        findAll(url);
+        $scope.name = name;
+        changeSave('add');
+        $scope.entity = {};
+        baseUrl = url
+    };
+
+	//changeSave('add');
+	//findAll('/api/users');
+    //$scope.entity = {};
+    
+    // init
+    entityService("findAll", "/api").then(function(data){
+    	$scope.buttons = data;
+    });
 
 }]);
