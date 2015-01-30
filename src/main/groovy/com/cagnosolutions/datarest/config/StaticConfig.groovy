@@ -15,6 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 class StaticConfig extends WebMvcConfigurerAdapter {
 	void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/temp/**").addResourceLocations("classpath:/temp/");
+		registry.addResourceHandler("/app/**").addResourceLocations("classpath:/app/");
 	}
 }

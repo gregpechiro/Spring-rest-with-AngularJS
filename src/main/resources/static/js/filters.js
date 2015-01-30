@@ -1,13 +1,11 @@
 'use strict';
 
-/* filters */
-
 var filters = angular.module('filters', []);
 
-filters.filter('CapFirst', function() {
-    return function(input) {
-        if (input != null)
-        input = input.toLowerCase();
-        return input.substring(0,1).toUpperCase()+input.substring(1);
-    }
+filters.filter('title', function() {
+	return function(s) { return s && s[0].toUpperCase() + s.slice(1); }
+});
+
+filters.filter('sanitize', function() {
+	return function(s) { return s && s.split("{")[0]; }
 });

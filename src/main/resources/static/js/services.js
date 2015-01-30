@@ -1,55 +1,32 @@
 'use strict';
 
-/* Services */
+var service = angular.module('services', ['ngResource']);
 
-var services = angular.module('services', ['ngResource']);
+service.factory('entityService', ['$http', function($http) {
 
-services.factory('Service', ['$http', function($http){
-    // find all
-    var findAll = function(url) {
-        var promise = $http.get(url).then(function (response) {
-            return response.data;
-        });
-        return promise;
-    };
-    
-    // find one
-    var findOne = function(url) {
-        var promise = $http.get(url).then(function (response) {
-            return response.data;
-        });
-        return promise;
-    };
-    
-    // update existing
-    var update = function(url, entity) {
-        var promise = $http.put(url, entity).then(function (response) {
-            return response.data;
-        });
-        return promise;
-    };
+	return function(call, uri, entity) {
+		switch(call) {
+			case "findAll":
+				return $http.get(uri).then(function(r){
+					return r.data;
+				});
+			case "findOne":
+				return $http.get(uri).then(function(r) {
+					return r.data;
+				});
+			case "update":
+				return $http.put(uri, entity).then(function(r) {
+					return r.data;
+				});
+			case "add":
+				return $http.post(uri, entity).then(function(r) {
+					return r.data;
+				});
+			case "del":
+				return $http.delete(uri).then(function(r) {
+					return r.data;
+				});
+		}
+	};
 
-    // add new user
-    var add = function(url, entity) {
-        var promise = $http.post(url, entity).then(function (response) {
-            return response.data;
-        });
-        return promise;
-    };
-    
-    // delete user
-    var del = function(url) {
-        var promise = $http.delete(url).then(function (response) {
-            return response.data;
-        });
-        return promise;
-    };
-
-    return {
-        findAll : findAll,
-        findOne : findOne,
-        update : update,
-        add : add,
-        del : del
-    };
 }]);

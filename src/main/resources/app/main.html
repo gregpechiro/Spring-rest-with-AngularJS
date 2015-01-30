@@ -1,0 +1,76 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<span class="navbar-brand">
+				<span class="text-success">
+					<i class="fa fa-leaf"></i> Boot
+				</span> /
+				<span class="text-danger">
+					AngularJS
+				</span>
+			</span>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li ng-repeat="(k, v) in buttons._links">
+					<a href="{{ v.href | sanitize }}">{{ k | title }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="row">
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				User
+				<button class="btn btn-default pull-right btn-xs" ng-click="clear()">Clear</button>
+			</div>
+			<div class="panel-body">
+				<form role="form" class="form-horizontal">
+					<div class="form-group"  ng-repeat="(key, value) in entity" ng-if="key != '_links'">
+						<label class="control-label col-lg-3">{{ key | title }}</label>
+						<div class="col-lg-9">
+							<input type="text" id="name" class="form-control" ng-model="entity[key]"
+								   placeholder="{{ key | title }}">
+						</div>
+					</div>
+					<div class="col-xs-12">
+						<div class="form-group">
+							<button class="btn btn-block btn-success" ng-click="save(entity._links.self.href)">Save</button>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-block btn-danger" ng-show="entity._links.self.href" ng-click="del(entity._links.self.href)">Delete</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">All {{ name | title }}</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th ng-repeat="(key, value) in entities._embedded[name][0]" ng-if="key != '_links'">{{ key |
+							title }}</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="entity in entities._embedded[name]">
+						<td ng-repeat="(key, value) in entity" ng-if="key != '_links'">{{ value }}</td>
+						<td><a href="" ng-click="edit(entity._links.self.href)">View</a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
