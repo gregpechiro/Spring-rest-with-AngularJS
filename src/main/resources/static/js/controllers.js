@@ -49,9 +49,10 @@ controllers.controller('MainController', ['$scope', 'entityService', function($s
 	    });
 	};
 
-	$scope.clear = function() {
-		$scope.entity = {}; changeSave('add');
-		$scope.showForm = false;
+	$scope.clear = function(show) {
+		$scope.entity = {}; 
+		changeSave('add');
+		$scope.showForm = show;
 	};
 
     $scope.setEntity = function(url, name) {

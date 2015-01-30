@@ -1,6 +1,5 @@
 package com.cagnosolutions.datarest.config
 
-import com.cagnosolutions.datarest.util.CustomAuthSuccess
 import com.cagnosolutions.datarest.util.CustomCsrfFilter
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,14 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.csrf.CsrfFilter
 import org.springframework.security.web.csrf.CsrfTokenRepository
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
 import javax.sql.DataSource
-
 /**
  * Created by Scott Cagno.
  * Copyright Cagno Solutions. All rights reserved.
@@ -35,7 +32,7 @@ class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
-		auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
+		auth.jdbcAuthentication().dataSource(dataSource)
 				.usersByUsernameQuery("SELECT username, password, active FROM user WHERE username=?")
 				.authoritiesByUsernameQuery("SELECT username, role FROM user WHERE username=?")
 	}
@@ -52,12 +49,12 @@ class AuthenticationConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/admin/**").hasAnyRole("ADMIN")
 			.antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-		//	.antMatchers("/api/**").hasAnyRole("ADMIN", "API")
+			.antMatchers("/api/**").hasAnyRole("ADMIN", "API")
 
-		http.formLogin()
-			.loginPage("/login").defaultSuccessUrl("/secure")
-			.successHandler(new CustomAuthSuccess())
-
+		/*http.formLogin()
+			.loginPage("/login")
+			.defaultSuccessUrl("/secure")
+			.successHandler(new CustomAuthSuccess())*/
 		http.httpBasic()
 
 		http.logout()
