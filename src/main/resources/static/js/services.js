@@ -54,7 +54,7 @@ services.factory('Service', ['$http', function($http){
     };
 }]);
 
-services.factory('AuthService', ['$cookieStore', function($cookieStore) {
+services.factory('LoginService', ['$cookieStore', function($cookieStore) {
 
     // mock login service method would call database here
     var login = function(username, password) {
