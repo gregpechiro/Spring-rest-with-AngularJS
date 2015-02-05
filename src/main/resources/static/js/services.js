@@ -2,7 +2,7 @@
 
 /* Services */
 
-var services = angular.module('services', ['ngResource']);
+var services = angular.module('services', ['ngResource', 'ngCookies']);
 
 services.factory('Service', ['$http', function($http){
     // find all
@@ -52,4 +52,23 @@ services.factory('Service', ['$http', function($http){
         add : add,
         del : del
     };
+}]);
+
+services.factory('AuthService', ['$cookieStore', function($cookieStore) {
+
+    // mock login service method would call database here
+    var login = function(username, password) {
+        if (username == 'gregpechiro@yahoo.com' && password == 'testing') {
+            var user = {username:username, password: password};
+            $cookieStore.put('user', user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    return {
+        login: login
+    }
+    
 }]);

@@ -4,7 +4,7 @@
 
 var controllers = angular.module('controllers', []);
 
-controllers.controller('ListUsersController', ['$scope', 'Service', function($scope, Service) {
+controllers.controller('ListUsersController', ['$scope', 'Service', function($scope, Service,  factory) {
 
     // find all users
 	function findAll() {
@@ -61,4 +61,16 @@ controllers.controller('ListUsersController', ['$scope', 'Service', function($sc
     findAll();
     $scope.user = {};
     
+}]);
+
+controllers.controller('LoginController', ['$location', '$scope', 'AuthService', function($location, $scope, AuthService) {
+    $scope.login = function() {
+        if (AuthService.login($scope.username, $scope.password)) {
+            $location.path('/secure/user');
+        } else {
+            $scope.err = true;
+        }
+    }
+    
+    $scope.err = false;
 }]);
