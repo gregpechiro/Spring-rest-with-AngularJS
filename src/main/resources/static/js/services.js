@@ -75,7 +75,6 @@ services.factory('LoginService', ['$http', '$cookieStore', function($http, $cook
             })
             .then(function(response) {
                 if (response.data != null && JSON.stringify(response.data) != '{}') {
-                    alert('if');
                     $cookieStore.put('user', response.data._embedded.users[0]);
                     return true;
                 } else {
