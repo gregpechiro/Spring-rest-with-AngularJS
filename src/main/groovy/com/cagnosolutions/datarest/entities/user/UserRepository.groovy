@@ -14,4 +14,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 @RepositoryRestResource
 interface UserRepository extends JpaRepository<User, Integer> {
 	User findByUsername(@Param("username") String username)
+	User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password)
 }

@@ -1,0 +1,49 @@
+<div id="navbar" class="navbar navbar-default navbar-static-top navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#/">Home</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#/logout">Logout</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-lg-offset-4 col-lg-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					User
+				</div>
+				<div class="panel-body">
+					<form role="form">
+						<div class="form-group">
+							<input type="text" id="name" class="form-control" ng-model="user.name" placeholder="First Name">
+						</div>
+						<div class="form-group">
+							<input type="email" id="username" class="form-control" ng-model="user.username" placeholder="Email">
+						</div>
+						<div class="form-group">
+							<input type="text" id="password" class="form-control" ng-model="user.password" placeholder="Password">
+						</div>
+						<div class="form-group">
+							<input type="text" id="active" class="form-control" ng-model="user.active" placeholder="Active">
+						</div>
+						<div class="form-group">
+							<button class="btn btn-block btn-success" ng-click="save()">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

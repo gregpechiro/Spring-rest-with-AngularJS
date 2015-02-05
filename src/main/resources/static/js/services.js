@@ -54,21 +54,45 @@ services.factory('Service', ['$http', function($http){
     };
 }]);
 
-services.factory('LoginService', ['$cookieStore', function($cookieStore) {
+services.factory('LoginService', ['$http', '$cookieStore', function($http, $cookieStore) {
+
+    var adminLogin = function() {
+        var user = {
+            username:'admin',
+            password:'admin',
+            role:'ROLE_ADMIN'
+        };
+        $cookieStore.put('user', user);
+    };
 
     // mock login service method would call database here
     var login = function(username, password) {
-        if (username == 'gregpechiro@yahoo.com' && password == 'testing') {
-            var user = {username:username, password: password};
-            $cookieStore.put('user', user);
-            return true;
-        } else {
-            return false;
-        }
-    }
+        var promise = $http.get('/api/users/search/findByUsernameAndPassword', {
+                params: {
+                    'username': username,
+                    'password': password
+                }
+            })
+            .success(function(data) {
+                if (data != null) {
+                    $cookieStore.put('user', data._embedded.users[0]);
+                    return true
+                } else {
+                    return false;
+                }
+            });
+        return promise;
+    };
     
     return {
-        login: login
+        login : login,
+        adminLogin:adminLogin
     }
     
+}]);
+
+services.factory('LogoutService', ['$cookieStore', function($cookieStore) {
+    return function() {
+        $cookieStore.remove('user');
+    }
 }]);

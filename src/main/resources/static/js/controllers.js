@@ -63,12 +63,40 @@ controllers.controller('ListUsersController', ['$scope', 'Service', function($sc
     
 }]);
 
-controllers.controller('LoginController', ['$location', '$scope', 'AuthService', function($location, $scope, AuthService) {
+controllers.controller('UserController', ['$scope', '$cookieStore', 'Service', function($scope, $cookieStore, Service) {
+    
+    $scope.user = $cookieStore.get('user');
+    
+    $scope.save = function() {
+        Service.update($scope.user._links.self.href, $scope.user).then(function() {
+            Service.findOne(url).then(function() {
+                $cookieStore.put('user', data)
+                $scope.user = data;
+            })
+        })
+    };
+    
+    
+   
+    
+}]);
+
+
+controllers.controller('LoginController', ['$location', '$scope', 'LoginService', function($location, $scope, LoginService) {
+
     $scope.login = function() {
-        if (AuthService.login($scope.username, $scope.password)) {
-            $location.path('/secure/user');
+        if ($scope.username == 'admin' && $scope.password == 'admin') {
+            LoginService.adminLogin();
+             $location.path('/admin/user');
         } else {
-            $scope.err = true;
+            LoginService.login($scope.username, $scope.password).then(function(data) {
+                if (data) {
+
+                    $location.path('/secure/user');
+                } else {
+                    $scope.err = true;
+                }
+            });
         }
     }
     

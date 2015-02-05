@@ -14,15 +14,25 @@ userApp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'temp/home.html'
 		})
 		.when('/secure/user', {
-			templateUrl: 'temp/users.html',
-			controller: 'ListUsersController',
+			templateUrl: 'temp/user.html',
+			controller: 'UserController',
 			resolve: {
 			    factory: checkAuth
 			}
 		})
+		.when('/admin/user', {
+		    resolve: {
+		        factory: checkAdmin
+		    },
+		    templateUrl: 'temp/users.html',
+		    controller: 'ListUsersController'
+		})
 		.when('/login', {
 		    templateUrl: 'temp/login.html',
 		    controller: 'LoginController'
+		})
+		.when('/error', {
+		    templateUrl: 'temp/error.html'
 		})
 		.when('/logout', {
 		    resolve: {
@@ -39,6 +49,19 @@ var checkAuth = function($cookieStore, $location) {
         $location.path('/login');
     }
 };
+
+var checkAdmin = function($cookieStore, $location) {
+    var user = $cookieStore.get('user');
+    if (user != null && user != {}) {
+        if (user.role == 'ROLE_ADMIN') {
+            return true;
+        } else {
+            $location.path('/error');
+        }
+    } else {
+        $location.path('/login');
+    }
+}
 
 var logout = function($cookieStore) {
     $cookieStore.remove('user');
