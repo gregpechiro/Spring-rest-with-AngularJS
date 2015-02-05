@@ -91,7 +91,6 @@ controllers.controller('LoginController', ['$location', '$scope', 'LoginService'
         } else {
             LoginService.login($scope.username, $scope.password).then(function(data) {
                 if (data) {
-
                     $location.path('/secure/user');
                 } else {
                     $scope.err = true;

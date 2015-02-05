@@ -43,7 +43,8 @@ userApp.config(['$routeProvider', function($routeProvider) {
 }]);
 
 var checkAuth = function($cookieStore, $location) {
-    if ($cookieStore.get('user')) {
+    var user = $cookieStore.get('user')
+    if (user != null && user != {}) {
         return true;
     } else {
         $location.path('/login');

@@ -73,22 +73,23 @@ services.factory('LoginService', ['$http', '$cookieStore', function($http, $cook
                     'password': password
                 }
             })
-            .success(function(data) {
-                if (data != null) {
-                    $cookieStore.put('user', data._embedded.users[0]);
-                    return true
+            .then(function(response) {
+                if (response.data != null && JSON.stringify(response.data) != '{}') {
+                    alert('if');
+                    $cookieStore.put('user', response.data._embedded.users[0]);
+                    return true;
                 } else {
                     return false;
                 }
             });
         return promise;
     };
-    
+
     return {
         login : login,
         adminLogin:adminLogin
     }
-    
+
 }]);
 
 services.factory('LogoutService', ['$cookieStore', function($cookieStore) {
