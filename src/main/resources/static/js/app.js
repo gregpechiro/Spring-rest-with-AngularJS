@@ -8,4 +8,8 @@ crudApp.config(['$routeProvider', function($routeProvider) {
 			templateUrl: "app/main.html",
 			controller: "MainController"
 		})
+		.when('/custom', {
+		    templateUrl: "app/custom.html",
+		    controller: "CustomController"
+		})
 }]);

@@ -74,3 +74,20 @@ controllers.controller('MainController', ['$scope', 'entityService', function($s
     });
 
 }]);
+
+controllers.controller('CustomController', ['$scope', '$routeParams', 'entityService', function($scope, $routeParams, entityService) {
+
+    entityService('findAll', '/info/tables').then(function(data) {
+        $scope.tables = data;
+    });
+
+    entityService("findAll", "/api").then(function(data){
+    	$scope.buttons = data;
+    });
+    
+    $scope.types = ['table', 'form'];
+    
+    $scope.positions = ['position1', 'position2', 'position3', 'position4']
+
+}]);
+

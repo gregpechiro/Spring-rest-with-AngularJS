@@ -1,0 +1,113 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<span class="navbar-brand">
+				<span class="text-success">
+					<i class="fa fa-leaf"></i> Boot
+				</span> /
+				<span class="text-danger">
+					AngularJS
+				</span>
+			</span>
+		</div>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown">Custom View <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li ng-repeat="(k, v) in buttons._links">
+							<a href="#/custom/{{ k }}">{{ k | title }}</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li ng-repeat="(k, v) in buttons._links">
+					<a href="" ng-click="setEntity((v.href | links), k)">{{ k | title }}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="row">
+	<input type="text" ng-model="layout.name" placeholder="Layout Name"/>
+</div>
+<div class="row">
+	<div class="col-lg-3">
+		<div class="row">
+			<h4>Position 1</h4>
+			<select ng-model="layout.position1.table">
+				<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
+			</select>
+			<select ng-model="layout.position1.type" ng-show="layout.position1.table">
+				<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
+			</select>
+		</div>
+		<div class="row" ng-show="layout.position1.type">
+			<div class="checkbox" ng-repeat="(k,v) in tables[layout.position1.table]">
+				<label>
+					<input type="checkbox" checked> {{ k | title }}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="row">
+			<h4>Position 2</h4>
+			<select ng-model="layout.position2.table">
+				<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
+			</select>
+			<select ng-model="layout.position2.type" ng-show="layout.position2.table">
+				<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
+			</select>
+		</div>
+		<div class="row" ng-show="layout.position2.type">
+			<div class="checkbox" ng-repeat="(k,v) in tables[layout.position2.table]">
+				<label>
+					<input type="checkbox" checked> {{ k | title }}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="row">
+			<h4>Position 3</h4>
+			<select ng-model="layout.position3.table">
+				<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
+			</select>
+			<select ng-model="layout.position3.type" ng-show="layout.position3.table">
+				<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
+			</select>
+		</div>
+		<div class="row" ng-show="layout.position3.type">
+			<div class="checkbox" ng-repeat="(k,v) in tables[layout.position3.table]">
+				<label>
+					<input type="checkbox" checked> {{ k | title }}
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<div class="row">
+			<h4>Position 4</h4>
+			<select ng-model="layout.position4.table">
+				<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
+			</select>
+			<select ng-model="layout.position4.type" ng-show="layout.position4.table">
+				<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
+			</select>
+		</div>
+		<div class="row" ng-show="layout.position4.type">
+			<div class="checkbox" ng-repeat="(k,v) in tables[layout.position4.table]">
+				<label>
+					<input type="checkbox" checked> {{ k | title }}
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
