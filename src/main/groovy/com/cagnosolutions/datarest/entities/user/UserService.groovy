@@ -23,7 +23,11 @@ class UserService {
 		repo.findOne(id)
 	}
 	
-	def save(User user) {
+	User save(User user) {
 		repo.save(user)
+	}
+	
+	def delete(Integer id) {
+		repo.delete(id)
 	}
 }

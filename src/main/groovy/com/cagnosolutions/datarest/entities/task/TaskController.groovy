@@ -3,6 +3,7 @@ package com.cagnosolutions.datarest.entities.task
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -29,12 +30,17 @@ class TaskController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	def addTask(Task task) {
+	def addTask(@RequestBody Task task) {
 		taskService.save(task)
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	def saveTask(Task task) {
+	def saveTask(@RequestBody Task task) {
 		taskService.save(task)
+	}
+	
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	Task newTask() {
+		new Task()
 	}
 }

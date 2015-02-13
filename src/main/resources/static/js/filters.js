@@ -3,11 +3,12 @@
 var filters = angular.module('filters', []);
 
 filters.filter('title', function() {
-	return function(input, single) {
+	return function(input, plural) {
 	    if (input != null) {
 	        var value = input[0].toUpperCase() + input.slice(1);
-	        if (single) {
-	            value = (value[value.length - 1] == 's') ? value.substring(0, value.length - 1) : value;
+	        if (plural) {
+	            //value = (value[value.length - 1] == 's') ? value.substring(0, value.length - 1) : value;
+	            value = value + 's';
 	        }
 	        return value
 	    }

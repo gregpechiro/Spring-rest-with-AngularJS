@@ -2,7 +2,7 @@
 
 var service = angular.module('services', ['ngResource']);
 
-service.factory('entityService', ['$http', function($http) {
+service.factory('oldService', ['$http', function($http) {
 
 	return function(call, url, entity) {
 		switch(call) {
@@ -28,5 +28,12 @@ service.factory('entityService', ['$http', function($http) {
 				});
 		}
 	};
+
+}]);
+
+service.factory('entityService', ['$resource', function($resource) {
+    return function(url, call) {
+        return $resource(url);
+    };
 
 }]);

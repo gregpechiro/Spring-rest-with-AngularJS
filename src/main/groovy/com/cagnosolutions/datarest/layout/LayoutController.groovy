@@ -3,6 +3,7 @@ package com.cagnosolutions.datarest.layout
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -23,13 +24,18 @@ class LayoutController {
 		layoutService.findAll()
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	Layout findOneLayout(@PathVariable Integer id) {
 		layoutService.findOne(id)
+	}*/
+	
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	Layout findOneLayoutByName(@PathVariable String name) {
+		layoutService.findByName(name)
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	def addLayout(Layout newLayout) {
+	def addLayout(@RequestBody Layout newLayout) {
 		def layout = layoutService.findByName(newLayout.name)
 		if (layout != null) {
 			layoutService.mergeProperties(newLayout, layout)

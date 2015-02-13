@@ -16,11 +16,11 @@ class User {
 
 	@Id
 	@GeneratedValue
-	int id
+	Integer id
 	String name
 	String username
 	String password
 	String role = "ROLE_USER"
-	short active = 1
+	Short active = 1
 
 }

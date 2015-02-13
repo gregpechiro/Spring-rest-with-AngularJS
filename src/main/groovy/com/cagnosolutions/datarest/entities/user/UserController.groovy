@@ -2,6 +2,7 @@ package com.cagnosolutions.datarest.entities.user
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -28,12 +29,22 @@ class UserController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	def addUser(User user) {
+	User addUser(@RequestBody User user) {
 		userService.save(user)
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	def saveUser(User user) {
+	User saveUser(@RequestBody User user) {
 		userService.save(user)
+	}
+	
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	User newUser() {
+		new User()
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	def deleteUser(@PathVariable Integer id) {
+		userService.delete(id)
 	}
 }

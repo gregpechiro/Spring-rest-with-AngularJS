@@ -18,24 +18,33 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#/custom">Custom View</a></li>
-				<li ng-repeat="(k, v) in buttons._links">
-					<a href="" ng-click="setEntity((v.href | links), k)">{{ k | title }}</a>
+				<li class="dropdown">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown">Custom Views <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li ng-repeat="layout in layouts">
+							<a href="#/custom/{{ layout.name }}">{{ layout.name | title }}</a>
+						</li>
+					</ul>
+				</li>
+				<li><a href="#/create">Create Custom</a></li>
+				<li ng-repeat="(k, v) in buttons">
+					<a href="" ng-click="setEntity(('/' + k), k)">{{ k | title }}</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 </nav>
+
 <div class="row" ng-show="entities">
 	<div class="col-lg-4" ng-show="showForm">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				User
+				{{ name | title }}
 				<button class="btn btn-default pull-right btn-xs" ng-click="clear(false)">Clear</button>
 			</div>
 			<div class="panel-body">
 				<form role="form" class="form-horizontal">
-					<div class="form-group"  ng-repeat="(key, value) in entity" ng-if="key != '_links'">
+					<div class="form-group"  ng-repeat="(key, value) in entity">
 						<label class="control-label col-lg-3">{{ key | title }}</label>
 						<div class="col-lg-9">
 							<input type="text" id="name" class="form-control" ng-model="entity[key]"
@@ -44,10 +53,10 @@
 					</div>
 					<div class="col-xs-12">
 						<div class="form-group">
-							<button class="btn btn-block btn-success" ng-click="save(entity._links.self.href)">{{ saveName | title }}</button>
+							<button class="btn btn-block btn-success" ng-click="save(baseUrl+'/'+entity.id)">{{ saveName | title }}</button>
 						</div>
 						<div class="form-group">
-							<button class="btn btn-block btn-danger" ng-show="entity._links.self.href" ng-click="del(entity._links.self.href)">Delete</button>
+							<button class="btn btn-block btn-danger" ng-show="entity.id" ng-click="del(baseUrl+'/'+entity.id)">Delete</button>
 						</div>
 					</div>
 				</form>
@@ -57,20 +66,20 @@
 	<div ng-class="{true : 'col-lg-8', false : 'col-lg-12'}[showForm]">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				All {{ name | title }}
-				<button class="btn btn-default btn-xs pull-right" ng-click="clear(true)">Add {{ name | title:true }}</button>
+				All {{ name | title:true }}
+				<button class="btn btn-default btn-xs pull-right" ng-click="clear(true)">Add {{ name | title }}</button>
 			</div>
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th ng-repeat="(key, value) in entities._embedded[name][0]" ng-if="key != '_links'">{{ key | title }}</th>
+						<th ng-repeat="(key, value) in entity">{{ key | title }}</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="entity in entities._embedded[name]">
-						<td ng-repeat="(key, value) in entity" ng-if="key != '_links'">{{ value }}</td>
-						<td><a href="" ng-click="edit(entity._links.self.href)">View</a></td>
+					<tr ng-repeat="entity in entities">
+						<td ng-repeat="(key, value) in entity">{{ value }}</td>
+						<td><a href="" ng-click="edit(baseUrl+'/'+entity.id)">View</a></td>
 					</tr>
 				</tbody>
 			</table>
