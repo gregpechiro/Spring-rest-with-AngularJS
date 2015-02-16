@@ -76,9 +76,6 @@ controllers.controller('UserController', ['$scope', '$cookieStore', 'Service', f
         })
     };
     
-    
-   
-    
 }]);
 
 
