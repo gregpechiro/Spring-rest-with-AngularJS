@@ -93,27 +93,14 @@ controllers.controller('CreateController', ['$scope', 'entityService', function(
         for (var i = 0; i < $scope.positions.length; i++) {
             var position = {};
             position['resource'] = $scope.positions[i].resource;
+            position['type'] = $scope.positions[i].type;
             var fields = [];
             for (var key in $scope.positions[i].fields) {
                 if ($scope.positions[i].fields[key]) {
                     fields.push(key);
                 }
             }
-            var html = ''
-            switch ($scope.positions[i].type) {
-                case 'table':
-                    html = '<table class="table table-striped"><thead><tr>';
-                    for (var index = 0; index < fields.length; index++) {
-                       html += '<th>' + fields[index] + '</th>';
-                    }
-                    html += '</tr></thead><tbody><tr ng-repeat="object in object' + i + '">'
-                    for (var index = 0; index < fields.length; index++) {
-                        html += '<td>{{ object.' + fields[index] + ' }}</td>';
-                    }
-                    html += '</tr></tbody></table>';
-                    break;
-            }
-            position['html'] = html;
+            position['fields'] = fields;
             $scope.layout.positions.push(position);
         }
         
@@ -122,22 +109,41 @@ controllers.controller('CreateController', ['$scope', 'entityService', function(
 
 }]);
 
-controllers.controller('CustomController', ['$scope', '$routeParams', '$compile', 'entityService', function($scope, $routeParams, $compile, entityService) {
+controllers.controller('CustomController', ['$scope', '$routeParams', '$compile', 'entityService', 'htmlService',
+function($scope, $routeParams, $compile, entityService, htmlService) {
 
     $scope.layouts = entityService('/layout').query();
 
     entityService('/layout/' + $routeParams.name).get().$promise.then(function(data) {
         $scope.layout = data
         for (var i = 0; i < data.positions.length; i++) {
-            $scope['item' + i] = data.positions[i].html;
-            $scope['object' + i] = entityService('/'+ data.positions[i].resource).query();
+            switch (data.positions[i].type) {
+                case 'table' :
+                    $scope['item' + i] = htmlService.generateTable(data.positions[i].fields, i);
+                    $scope['object' + i] = entityService('/'+ data.positions[i].resource).query();
+                    break;
+                case 'form' :
+                    $scope['item' + i] = htmlService.generateForm(data.positions[i].fields, i, data.positions[i].resource);
+                    $scope['click' + i] = function(resource, objectNumber) {
+                        entityService('/' + resource).save($scope['object' + objectNumber]).$promise.then(function() {
+                            $scope.refresh();
+                        });
+                    };
+            }
         }
     });
     
     $scope.refresh = function() {
         for (var i = 0; i < $scope.layout.positions.length; i++) {
-            $scope['object' + i] = entityService('/'+ $scope.layout.positions[i].resource).query();
+             switch ($scope.layout.positions[i].type) {
+                case 'table' :
+                    $scope['object' + i] = entityService('/'+ $scope.layout.positions[i].resource).query();
+                    break;
+                case 'form' :
+                    $scope['object' + i] = {};
+             }
         }
     }
+    
 }]);
 

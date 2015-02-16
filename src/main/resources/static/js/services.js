@@ -2,38 +2,45 @@
 
 var service = angular.module('services', ['ngResource']);
 
-service.factory('oldService', ['$http', function($http) {
-
-	return function(call, url, entity) {
-		switch(call) {
-			case "findAll":
-				return $http.get(url).then(function(r){
-					return r.data;
-				});
-			case "findOne":
-				return $http.get(url).then(function(r) {
-					return r.data;
-				});
-			case "update":
-				return $http.put(url, entity).then(function(r) {
-					return r.data;
-				});
-			case "add":
-				return $http.post(url, entity).then(function(r) {
-					return r.data;
-				});
-			case "del":
-				return $http.delete(url).then(function(r) {
-					return r.data;
-				});
-		}
-	};
-
-}]);
-
 service.factory('entityService', ['$resource', function($resource) {
     return function(url, call) {
         return $resource(url);
     };
+
+}]);
+
+service.factory('htmlService', [function() {
+
+    var generateTable = function(fields, i) {
+        var html = '';
+        html = '<div class="panel panel-default"><table class="table table-striped"><thead><tr>';
+        for (var index = 0; index < fields.length; index++) {
+           html += '<th>' + fields[index] + '</th>';
+        }
+        html += '</tr></thead><tbody><tr ng-repeat="object in object' + i + '">'
+        for (var index = 0; index < fields.length; index++) {
+            html += '<td>{{ object.' + fields[index] + ' }}</td>';
+        }
+        html += '</tr></tbody></table></div>';
+        return html;
+    };
+    
+    var generateForm = function(fields, i, resource) {
+        
+        var html = '';
+        html += '<div class="panel panel-default"><div class="panel-body">';
+        for (var index = 0; index < fields.length; index++) {
+            html += '<div class="form-group">'+
+            '<input class="form-control" ng-model="object' + i + '.' + fields[index] + '" placeholder="' + fields[index] + '">' +
+            '</div>';
+        }
+        html += '<button class="btn btn-primary btn-block" ng-click="click' + i + '(\'' + resource + '\', ' + i + ')">Save</button></div></div>';
+        return html;
+    };
+
+    return {
+        generateTable : generateTable,
+        generateForm : generateForm
+    }
 
 }]);
