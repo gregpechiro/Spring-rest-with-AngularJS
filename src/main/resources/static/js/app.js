@@ -12,8 +12,20 @@ crudApp.config(['$routeProvider', function($routeProvider) {
 		    templateUrl: "app/create.html",
 		    controller: "CreateController"
 		})
-		.when('/custom/:name', {
-		    templateUrl: "app/custom.html",
+		.when('/template1/:name', {
+		    templateUrl: "app/temp1.html",
 		    controller: "CustomController"
 		})
+		.when('/template2/:name', {
+            templateUrl: "app/temp2.html",
+            controller: "CustomController"
+        })
+        .when('/template3/:name', {
+            templateUrl: "app/temp3.html",
+            controller: "CustomController"
+        })
+        .when('/template4/:name', {
+            templateUrl: "app/temp4.html",
+            controller: "CustomController"
+        })
 }]);

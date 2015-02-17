@@ -14,8 +14,7 @@ class Layout {
 	@Id
 	@GeneratedValue
 	Integer id
-	String layoutName
+	String template
 	String name
-
 	ArrayList<HashMap<String, Object>> positions
 }

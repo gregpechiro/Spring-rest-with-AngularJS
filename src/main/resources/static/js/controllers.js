@@ -85,23 +85,33 @@ controllers.controller('CreateController', ['$scope', 'entityService', function(
     
     $scope.types = ['table', 'form'];
     
-    $scope.availablePositions = ['position1', 'position2', 'position3', 'position4']
+    //$scope.availablePositions = ['position1', 'position2', 'position3', 'position4']
     
-    $scope.fields = {stuff:"stuff"};
+    $scope.templates = {
+        "template1" : [{}],
+        "template2" : [{}, {}],
+        "template3" : [{}, {}, {}],
+        "template4" : [{}, {}, {}, {}]
+    };
+    
+    $scope.setTemplate = function() {
+       $scope.layout.positions = $scope.templates[$scope.layout.template];
+    };
     
     $scope.save = function() {
-        for (var i = 0; i < $scope.positions.length; i++) {
-            var position = {};
+        for (var i = 0; i < $scope.layout.positions.length; i++) {
+            /*var position = {};
             position['resource'] = $scope.positions[i].resource;
-            position['type'] = $scope.positions[i].type;
+            position['type'] = $scope.positions[i].type;*/
             var fields = [];
             for (var key in $scope.positions[i].fields) {
                 if ($scope.positions[i].fields[key]) {
                     fields.push(key);
                 }
             }
-            position['fields'] = fields;
-            $scope.layout.positions.push(position);
+            //position['fields'] = fields;
+            $scope.layout.positions['fields'] = fields;
+            alert(fields)
         }
         
         entityService('/layout').save($scope.layout);

@@ -22,7 +22,7 @@
 					<a href="" class="dropdown-toggle" data-toggle="dropdown">Custom Views <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li ng-repeat="layout in layouts">
-							<a href="#/custom/{{ layout.name }}">{{ layout.name | title }}</a>
+							<a href="#/{{ layout.template }}/{{ layout.name }}">{{ layout.name | title }}</a>
 						</li>
 					</ul>
 				</li>
@@ -34,25 +34,38 @@
 		</div>
 	</div>
 </nav>
+
 <div class="row">
+	<select ng-model="layout.template" ng-click="setTemplate()">
+		<option ng-repeat="(key, value) in templates" value="{{ key }}">{{ key | title }}</option>
+	</select>
 	<input type="text" ng-model="layout.name" placeholder="Layout Name"/>
 	<button ng-click="save()">Save</button>
 </div>
-<div class="row">
-	<div class="col-lg-3" ng-repeat="(index, position) in availablePositions">
+
+
+<div class="row" ng-show="layout.template">
+	<div class="col-lg-3" ng-repeat="(index, position) in layout.positions">
 		<div class="row">
-			<h4>{{ position | title }}</h4>
-			<select ng-model="positions[index].resource">
-				<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
-			</select>
-			<select ng-model="positions[index].type" ng-show="positions[index].resource">
-				<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
-			</select>
+			<h4>Position {{ index + 1 }}</h4>
+			<div>
+				<label>Table</label>
+				<select ng-model="layout.positions[index].resource">
+					<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
+				</select>
+			</div>
+			<div ng-show="layout.positions[index].resource">
+				<label>Type</label>
+				<select ng-model="layout.positions[index].type">
+					<option ng-repeat="selectType in types" value="{{ selectType }}">{{ selectType | title }}</option>
+				</select>
+			</div>
 		</div>
-		<div class="row" ng-show="positions[index].type">
-			<div class="checkbox" ng-repeat="(k,v) in tables[positions[index].resource]">
+		<div class="row" ng-show="layout.positions[index].type">
+			<label>Fields</label>
+			<div class="checkbox" ng-repeat="(k,v) in tables[layout.positions[index].resource]">
 				<label>
-					<input type="checkbox" ng-model="positions[index].fields[k]" checked> {{ k | title }}
+					<input type="checkbox" ng-model="layout.positions[index].fields[k]" > {{ k | field }}
 				</label>
 			</div>
 		</div>

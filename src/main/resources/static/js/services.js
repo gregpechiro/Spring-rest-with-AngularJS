@@ -15,7 +15,7 @@ service.factory('htmlService', [function() {
         var html = '';
         html = '<div class="panel panel-default"><table class="table table-striped"><thead><tr>';
         for (var index = 0; index < fields.length; index++) {
-           html += '<th>' + fields[index] + '</th>';
+           html += '<th>{{ "' + fields[index] + '" | field }}</th>';
         }
         html += '</tr></thead><tbody><tr ng-repeat="object in object' + i + '">'
         for (var index = 0; index < fields.length; index++) {
@@ -31,7 +31,7 @@ service.factory('htmlService', [function() {
         html += '<div class="panel panel-default"><div class="panel-body">';
         for (var index = 0; index < fields.length; index++) {
             html += '<div class="form-group">'+
-            '<input class="form-control" ng-model="object' + i + '.' + fields[index] + '" placeholder="' + fields[index] + '">' +
+            '<input class="form-control" ng-model="object' + i + '.' + fields[index] + '" placeholder="{{ \'' + fields[index] + '\' | field }}">' +
             '</div>';
         }
         html += '<button class="btn btn-primary btn-block" ng-click="click' + i + '(\'' + resource + '\', ' + i + ')">Save</button></div></div>';
