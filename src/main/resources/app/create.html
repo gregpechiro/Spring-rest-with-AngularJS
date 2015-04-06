@@ -50,7 +50,7 @@
 			<h4>Position {{ index + 1 }}</h4>
 			<div>
 				<label>Table</label>
-				<select ng-model="layout.positions[index].resource">
+				<select ng-model="layout.positions[index].resource" ng-click="setFields(index)">
 					<option ng-repeat="(k, v) in tables" value="{{ k }}">{{ k | title }}</option>
 				</select>
 			</div>
@@ -63,11 +63,13 @@
 		</div>
 		<div class="row" ng-show="layout.positions[index].type">
 			<label>Fields</label>
-			<div class="checkbox" ng-repeat="(k,v) in tables[layout.positions[index].resource]">
-				<label>
-					<input type="checkbox" ng-model="layout.positions[index].fields[k]" > {{ k | field }}
-				</label>
-			</div>
+			<ul ui-sortable="sortableOptions" ng-model="layout.positions[index].fields" class="list">
+				<li ng-repeat="field in layout.positions[index].fields" class="item">
+					<label>
+						<input type="checkbox" ng-model="field.include"> {{ field.name }}
+					</label>
+				</li>
+			</ul>
 		</div>
 	</div>
 </div>

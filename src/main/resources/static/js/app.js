@@ -1,6 +1,6 @@
 'use strict';
 
-var crudApp = angular.module('crudApp', [ 'ngRoute', 'controllers', 'services', 'filters', 'directives' ]);
+var crudApp = angular.module('crudApp', [ 'ngRoute', 'controllers', 'services', 'filters', 'directives', 'ui.sortable']);
 
 crudApp.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
@@ -27,5 +27,9 @@ crudApp.config(['$routeProvider', function($routeProvider) {
         .when('/template4/:name', {
             templateUrl: "app/temp4.html",
             controller: "CustomController"
+        })
+        .when('/sort', {
+            templateUrl: "app/sort.html",
+            controller : "sortableController"
         })
 }]);

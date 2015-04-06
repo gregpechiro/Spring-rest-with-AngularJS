@@ -99,10 +99,10 @@ controllers.controller('CreateController', ['$scope', 'entityService', function(
     };
     
     $scope.save = function() {
-        for (var i = 0; i < $scope.layout.positions.length; i++) {
-            /*var position = {};
+        /*for (var i = 0; i < $scope.layout.positions.length; i++) {
+            *//*var position = {};
             position['resource'] = $scope.positions[i].resource;
-            position['type'] = $scope.positions[i].type;*/
+            position['type'] = $scope.positions[i].type;*//*
             var fields = [];
             for (var key in $scope.positions[i].fields) {
                 if ($scope.positions[i].fields[key]) {
@@ -112,33 +112,48 @@ controllers.controller('CreateController', ['$scope', 'entityService', function(
             //position['fields'] = fields;
             $scope.layout.positions['fields'] = fields;
             alert(fields)
-        }
+        }*/
         
         entityService('/layout').save($scope.layout);
     };
-
+    
+    $scope.setFields = function(index) {
+        $scope.layout.positions[index].fields = [];
+        for (var key in $scope.tables[$scope.layout.positions[index].resource]  ) {
+            $scope.layout.positions[index].fields.push({name:key,include:true});
+        }
+    };
+    
+    $scope.sortableOptions = {
+        stop: function(e, ui) {
+            console.log($scope.layout);
+        }
+    };
+    
 }]);
 
-controllers.controller('CustomController', ['$scope', '$routeParams', '$compile', 'entityService', 'htmlService',
-function($scope, $routeParams, $compile, entityService, htmlService) {
+controllers.controller('CustomController', ['$scope', '$routeParams', 'entityService', 'htmlService',
+function($scope, $routeParams, entityService, htmlService) {
 
     $scope.layouts = entityService('/layout').query();
 
     entityService('/layout/' + $routeParams.name).get().$promise.then(function(data) {
         $scope.layout = data
         for (var i = 0; i < data.positions.length; i++) {
+            var fields = getFields(data.positions[i].fields);
             switch (data.positions[i].type) {
                 case 'table' :
-                    $scope['item' + i] = htmlService.generateTable(data.positions[i].fields, i);
+                    $scope['item' + i] = htmlService.generateTable(fields, i);
                     $scope['object' + i] = entityService('/'+ data.positions[i].resource).query();
                     break;
                 case 'form' :
-                    $scope['item' + i] = htmlService.generateForm(data.positions[i].fields, i, data.positions[i].resource);
+                    $scope['item' + i] = htmlService.generateForm(fields, i, data.positions[i].resource);
                     $scope['click' + i] = function(resource, objectNumber) {
                         entityService('/' + resource).save($scope['object' + objectNumber]).$promise.then(function() {
                             $scope.refresh();
                         });
                     };
+                    break;
             }
         }
     });
@@ -155,5 +170,52 @@ function($scope, $routeParams, $compile, entityService, htmlService) {
         }
     }
     
+    function getFields(fields) {
+        var newFields = [];
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].include) {
+                newFields.push(fields[i].name);
+            }
+        }
+        return newFields;
+    }
+    
 }]);
+
+controllers.controller('sortableController', function ($scope) {
+
+             $scope.todos = [
+               {name:'Item 5', include:false},
+               {name:'Item 3', include:false},
+               {name:'Item 1', include:false},
+               {name:'Item 6', include:false},
+               {name:'Item 2', include:false},
+               {name:'Item 4', include:false}
+             ];
+
+            /* $scope.todos.sort(function (a, b) {
+               return a.i > b.i;
+             });*/
+
+
+             $scope.sortableOptions = {
+               stop: function(e, ui) {
+                 /*for (var index in $scope.todos) {
+                   $scope.todos[index].i = index;
+                 }*/
+                 alert(JSON.stringify($scope.todos));
+
+                 //logModels();
+               }
+             };
+
+             //$scope.sortingLog = [];
+
+             /*function logModels () {
+               var logEntry = $scope.todos.map(function(i){
+                 return i.txt+'(pos:'+i.i+')';
+               }).join(', ');
+               $scope.sortingLog.push('Stop: ' + logEntry);
+             }*/
+           });
 

@@ -1,0 +1,14 @@
+<div ng-app="sortableApp" ng-controller="sortableController" class="container">
+	<h2>ui.sortable ordering</h2>
+
+	<div class="floatleft">
+		<ul id="sort1" ui-sortable="sortableOptions" ng-model="todos" class="list">
+			<li ng-repeat="field in todos" class="item">
+				<label>
+					<input type="checkbox" ng-model="field.include"> {{ field.name }}
+				</label>
+			</li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>

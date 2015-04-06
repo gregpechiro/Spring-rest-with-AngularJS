@@ -16,6 +16,7 @@ class Task {
 	@GeneratedValue
 	int id
 	String taskName
+	@Column(columnDefinition = "blob")
 	String taskDescription
 	String taskPriority
 	String taskStatus
